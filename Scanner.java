@@ -398,7 +398,7 @@ public class Scanner {
                     }
                     break;
                 case 17: //letra
-                    if(Character.isLetter(c)){
+                    if(Character.isLetter(c)||Character.isDigit(c)){
                         estado = 17;
                         lexema += c;
                     }
