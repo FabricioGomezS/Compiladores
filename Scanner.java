@@ -375,28 +375,32 @@ public class Scanner {
                 }
                     break;
                 case 16:
-                    if(c == '"'){
+                    if (c == '"') {
                         estado = 1601;
                         lexema += c;
-                        Token t = new Token(TipoToken.STRING, lexema.substring(1, lexema.length()-1));
-                        tokens.add(t);
-
-                        estado = 0;
-                        lexema = "";
-                    }
-                    else if(i == source.length() - 1){
+                    } else if (i == source.length() - 1) {
                         error(linea_actual, "Comillas sin cerrar");
                         System.exit(0);
-                    }
-                    else if(c=='\n'){
-                        error(linea_actual,"No se esperaba el salto de linea.");
+                    } else if (c == '\n') {
+                        error(linea_actual, "No se esperaba el salto de linea.");
                         System.exit(0);
-                    }
-                    else{
+                    } else {
                         estado = 16;
                         lexema += c;
                     }
-                    break;
+                break;
+
+                case 1601:
+                    if(i==i){
+                        String contenido = lexema.substring(1, lexema.length() - 1); // Excluye las comillas
+                        Token t = new Token(TipoToken.STRING, lexema, contenido);
+                        tokens.add(t);
+                        estado = 0;
+                        lexema = "";
+                    }
+                    
+                break;
+
                 case 17: //letra
                     if(Character.isLetter(c)||Character.isDigit(c)){
                         estado = 17;
